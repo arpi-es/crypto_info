@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+
+    id("kotlin-kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -63,4 +66,21 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    implementation("com.google.dagger:hilt-android:2.51.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.51.1")
+
+
+    // Compose dependencies
+    implementation( "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
+    implementation( "androidx.navigation:navigation-compose:2.4.0-alpha08")
+    implementation( "com.google.accompanist:accompanist-flowlayout:0.17.0")
+    implementation("androidx.compose.material3:material3:1.3.0")
+}
+
+
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

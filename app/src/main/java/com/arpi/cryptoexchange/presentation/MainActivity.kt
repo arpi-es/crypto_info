@@ -1,4 +1,4 @@
-package com.arpi.cryptoexchange
+package com.arpi.cryptoexchange.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.arpi.cryptoexchange.ui.theme.CryptoExchangeTheme
+import com.arpi.cryptoexchange.presentation.ui.theme.CryptoExchangeTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,6 +21,8 @@ class MainActivity : ComponentActivity() {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     Greeting("Android")
                 }
+
+
             }
         }
     }
