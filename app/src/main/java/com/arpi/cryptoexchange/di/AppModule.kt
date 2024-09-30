@@ -1,5 +1,6 @@
 package com.arpi.cryptoexchange.di
 
+import com.arpi.cryptoexchange.common.ApiConstants
 import com.arpi.cryptoexchange.common.Constants
 import com.arpi.cryptoexchange.data.remote.AuthInterceptor
 import com.arpi.cryptoexchange.data.remote.CoinApi
@@ -30,7 +31,7 @@ object AppModule {
 
     @Provides
     fun provideAuthInterceptor(): AuthInterceptor {
-        return AuthInterceptor(Constants.ACCESS_TOKEN)
+        return AuthInterceptor( ApiConstants.ACCESS_TOKEN)
     }
 
 

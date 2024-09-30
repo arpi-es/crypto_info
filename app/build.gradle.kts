@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
@@ -21,6 +23,22 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+
+
+
+       //load the values from .properties file
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("apikeys.properties").inputStream())
+        buildConfigField("String", "API_KEY", properties.getProperty("COIN_API_KEY"))
+
+
+
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
