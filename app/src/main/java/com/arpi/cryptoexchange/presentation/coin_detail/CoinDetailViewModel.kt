@@ -1,4 +1,4 @@
-package com.arpi.cryptoexchange.domain.use_case.get_coin
+package com.arpi.cryptoexchange.presentation.coin_detail
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.arpi.cryptoexchange.common.Constants
 import com.arpi.cryptoexchange.common.Resource
+import com.arpi.cryptoexchange.domain.use_case.get_coin.GetCoinUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class GetCoinViewModel @Inject constructor(
+class CoinDetailViewModel @Inject constructor(
     private val getCoinUseCase: GetCoinUseCase,
     savedStateHandle: SavedStateHandle,
 ) : ViewModel() {

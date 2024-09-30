@@ -1,4 +1,4 @@
-package com.arpi.cryptoexchange.domain.use_case.get_coin
+package com.arpi.cryptoexchange.presentation.coin_detail
 
 import com.arpi.cryptoexchange.domain.model.Coin
 import com.arpi.cryptoexchange.domain.model.CoinDetail

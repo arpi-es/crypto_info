@@ -1,6 +1,5 @@
 package com.arpi.cryptoexchange.domain.model
 
-import com.arpi.cryptoexchange.data.remote.dto.coin_detail.Description
 import com.arpi.cryptoexchange.data.remote.dto.coin_detail.Image
 
 data class CoinDetail(

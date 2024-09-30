@@ -67,15 +67,51 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    //Hilt
+
     implementation("com.google.dagger:hilt-android:2.51.1")
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
 
 
+
+
+
+    // Jetpack Lifecycle dependencies for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+
+
+    val lifecycle_version = "2.8.6"
+    val arch_version = "2.2.0"
+
+    // ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
+    // ViewModel utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
+    // LiveData
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+    // Lifecycle utilities for Compose
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycle_version")
+    // Saved state module for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+    // Annotation processor
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+
+
+
+
+
+
     // Compose dependencies
-    implementation( "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
-    implementation( "androidx.navigation:navigation-compose:2.4.0-alpha08")
+    implementation( "androidx.lifecycle:lifecycle-viewmodel-compose:2.8.6")
+    implementation( "androidx.navigation:navigation-compose:2.8.1")
     implementation( "com.google.accompanist:accompanist-flowlayout:0.17.0")
     implementation("androidx.compose.material3:material3:1.3.0")
+    implementation("androidx.graphics:graphics-shapes:1.0.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
 
 
     // Retrofit
@@ -83,6 +119,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    //Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
+
+
 
 }
 

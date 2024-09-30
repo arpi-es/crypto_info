@@ -10,12 +10,14 @@ interface CoinApi {
 
 
     @GET("coins/markets")
-    suspend fun getAllCoins(): List<CoinDto>
+    suspend fun getAllCoins(
+        @Query("vs_currency") currency: String = "usd" , // TODO dynamic
+    ): List<CoinDto>
 
 
     @GET("coins/{id}")
-    fun getCoinById(
-        @Path("id") coinId: String,
+    suspend fun getCoinById(
+        @Path("id") id: String,
         @Query("localization") localization: Boolean = false,
         @Query("tickers") tickers: Boolean = false,
         @Query("market_data") marketData: Boolean = false,
