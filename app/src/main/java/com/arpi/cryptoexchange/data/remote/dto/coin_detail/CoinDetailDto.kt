@@ -29,75 +29,7 @@ data class CoinDetailDto(
         val sentiment_votes_up_percentage: Double,
         val status_updates: List<Any>,
         val watchlist_portfolio_users: Int,
-
-        )
-
-data class MarketData(
-        val current_price: CurrencyPrices,
-        val ath: CurrencyPrices
 )
-
-data class CurrencyPrices(
-        val aed: Double,
-        val ars: Double,
-        val aud: Double,
-        val bch: Double,
-        val bdt: Double,
-        val bhd: Double,
-        val bmd: Double,
-        val bnb: Double,
-        val brl: Double,
-        val btc: Double,
-        val cad: Double,
-        val chf: Double,
-        val clp: Double,
-        val cny: Double,
-        val czk: Double,
-        val dkk: Double,
-        val dot: Double,
-        val eos: Double,
-        val eth: Double,
-        val eur: Double,
-        val gbp: Double,
-        val hkd: Double,
-        val huf: Double,
-        val inr: Double,
-        val jpy: Double,
-        val krw: Double,
-        val kwd: Double,
-        val ltc: Double,
-        val mmk: Double,
-        val mxn: Double,
-        val myr: Double,
-        val ngn: Double,
-        val nok: Double,
-        val nzd: Double,
-        val php: Double,
-        val pkr: Double,
-        val pln: Double,
-        val rub: Double,
-        val sar: Double,
-        val sek: Double,
-        val sgd: Double,
-        val thb: Double,
-        @SerializedName("try") val tryy: Double,
-        val twd: Double,
-        val uah: Double,
-        val usd: Double,
-        val vef: Double,
-        val vnd: Double,
-        val xag: Double,
-        val xau: Double,
-        val xdr: Double,
-        val xlm: Double,
-        val xrp: Double,
-        val yfi: Double,
-        val zar: Double,
-        val bits: Double,
-        val link: Double,
-        val sats: Double
-)
-
 
 fun CoinDetailDto.toCoinDetail(): CoinDetail {
 

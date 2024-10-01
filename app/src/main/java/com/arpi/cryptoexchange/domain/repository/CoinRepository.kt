@@ -5,7 +5,6 @@ import com.arpi.cryptoexchange.data.remote.dto.coin_dto.CoinDto
 
 interface CoinRepository {
 
-
     suspend fun getAllCoins(): List<CoinDto>
 
     suspend fun getCoinById(coinId: String): CoinDetailDto

@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class GetCoinsUseCase @Inject constructor(
-    private val repository: CoinRepository,
+        private val repository: CoinRepository,
 ) {
 
     operator fun invoke(): Flow<Resource<List<Coin>>> = flow {
@@ -23,7 +23,6 @@ class GetCoinsUseCase @Inject constructor(
             val coins = repository.getAllCoins().map { it.toCoin() }
             emit(Resource.Success(coins))
         } catch (e: HttpException) {
-            Log.i("MYTAG" , "Error : ${e.localizedMessage}")
             emit(Resource.Error(e.localizedMessage ?: "Unknown error occurred"))
         } catch (e: IOException) {
             emit(Resource.Error("Server not reachable"))

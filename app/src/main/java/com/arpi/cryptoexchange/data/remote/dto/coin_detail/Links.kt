@@ -14,3 +14,8 @@ data class Links(
     val twitter_screen_name: String,
     val whitepaper: String
 )
+
+data class ReposUrl(
+        val bitbucket: List<Any>,
+        val github: List<String>
+)

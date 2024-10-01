@@ -46,5 +46,4 @@ class CoinListViewModel @Inject constructor(
 
     }
 
-
 }
