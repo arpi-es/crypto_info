@@ -20,7 +20,7 @@ interface CoinApi {
         @Path("id") id: String,
         @Query("localization") localization: Boolean = false,
         @Query("tickers") tickers: Boolean = false,
-        @Query("market_data") marketData: Boolean = false,
+        @Query("market_data") marketData: Boolean = true,
         @Query("community_data") communityData: Boolean = false,
         @Query("developer_data") developerData: Boolean = false,
         @Query("sparkline") sparkline: Boolean = false,

@@ -129,7 +129,7 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.3.0")
     implementation("androidx.graphics:graphics-shapes:1.0.1")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
-
+    implementation("io.coil-kt:coil-compose:2.4.0")
 
 
     // Retrofit
