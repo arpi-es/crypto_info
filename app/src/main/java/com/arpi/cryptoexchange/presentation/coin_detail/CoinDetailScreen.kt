@@ -1,5 +1,6 @@
 package com.arpi.cryptoexchange.presentation.coin_detail
 
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,66 +17,83 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
+import com.arpi.cryptoexchange.presentation.coin_list.components.CoinDetailStateProvider
+import com.arpi.cryptoexchange.presentation.ui.theme.CryptoExchangeTheme
+import com.arpi.cryptoexchange.presentation.ui.theme.ThemePreviews
+
 
 @Composable
 fun CoinDetailScreen(
-        viewModel: CoinDetailViewModel = hiltViewModel<CoinDetailViewModel>(),
+    viewModel: CoinDetailViewModel = hiltViewModel<CoinDetailViewModel>(),
 ) {
     val state = viewModel.state.value
 
+    CoinDetailShow(state)
+}
 
+@Composable
+fun CoinDetailShow(
+    state: CoinDetailState,
+) {
     Box(modifier = Modifier.fillMaxSize()) {
 
         state.coin?.let { coin ->
             Column(
-                    modifier = Modifier
-                            .fillMaxSize()
-                            .padding(16.dp)
-                            .verticalScroll(rememberScrollState()) // Enable scrolling for long content
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()) // Enable scrolling for long content
             ) {
 
                 Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
 
                     Image(
-                            painter = rememberAsyncImagePainter(coin.image.large),
-                            contentDescription = null,
-                            modifier = Modifier
-                                    .size(80.dp)
-                                    .clip(CircleShape),
-                            contentScale = ContentScale.Crop
+                        painter = rememberAsyncImagePainter(
+                            model = coin.image.large,
+                            error = painterResource(android.R.drawable.ic_menu_report_image),
+                            placeholder = painterResource(android.R.drawable.ic_menu_gallery)  // Placeholder while loading
+                        ),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(CircleShape),
+                        contentScale = ContentScale.Crop
                     )
 
                     Spacer(modifier = Modifier.width(16.dp)) // Space between image and text
 
 
                     Column(
-                            modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f)
                     ) {
                         Text(
-                                text = coin.name,
-                                style = MaterialTheme.typography.headlineMedium,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                            text = coin.name,
+                            style = MaterialTheme.typography.headlineMedium,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                                text = "${coin.marketCapRank} • ${coin.symbol}",
-                                style = MaterialTheme.typography.bodyMedium
+                            text = "${coin.marketCapRank} • ${coin.symbol}",
+                            style = MaterialTheme.typography.bodyMedium
                         )
                     }
                 }
@@ -84,29 +102,29 @@ fun CoinDetailScreen(
 
 
                 Text(
-                        text = "$${coin.marketDataPrice}",
-                        style = MaterialTheme.typography.headlineLarge,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.fillMaxWidth()
+                    text = "$${coin.marketDataPrice}",
+                    style = MaterialTheme.typography.headlineLarge,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
 
                 Text(
-                        text = "Description",
-                        style = MaterialTheme.typography.headlineSmall.copy(fontSize = 20.sp),
-                        modifier = Modifier.align(Alignment.Start)
+                    text = "Description",
+                    style = MaterialTheme.typography.headlineSmall.copy(fontSize = 20.sp),
+                    modifier = Modifier.align(Alignment.Start)
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
 
                 Text(
-                        text = coin.description,
-                        style = MaterialTheme.typography.bodyLarge,
-                        textAlign = TextAlign.Justify,
-                        modifier = Modifier.fillMaxWidth()
+                    text = coin.description,
+                    style = MaterialTheme.typography.bodyLarge,
+                    textAlign = TextAlign.Justify,
+                    modifier = Modifier.fillMaxWidth()
                 )
 
 
@@ -115,18 +133,31 @@ fun CoinDetailScreen(
 
         if (state.error.isNotBlank()) {
             Text(
-                    text = state.error,
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp)
-                            .align(Alignment.Center)
+                text = state.error,
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .align(Alignment.Center)
             )
         }
 
         if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
+    }
+}
+
+@ThemePreviews
+@Composable
+fun CoinListScreenLoadingPreview(
+    @PreviewParameter(CoinDetailStateProvider::class) state: CoinDetailState
+) {
+    CryptoExchangeTheme() {
+        Surface {
+            CoinDetailShow(state = state)
+        }
+
     }
 }

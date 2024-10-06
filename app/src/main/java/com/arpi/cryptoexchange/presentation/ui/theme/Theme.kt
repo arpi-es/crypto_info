@@ -1,5 +1,6 @@
 package com.arpi.cryptoexchange.presentation.ui.theme
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -21,7 +22,7 @@ private val LightColorPalette = lightColorScheme(
 )
 
 @Composable
-fun CryptoExchangeTheme(darkTheme: Boolean = true, content: @Composable() () -> Unit) {
+fun CryptoExchangeTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
