@@ -2,7 +2,7 @@ package com.arpi.cryptoexchange.domain.use_case.get_coin
 
 
 import com.arpi.cryptoexchange.common.Resource
-import com.arpi.cryptoexchange.data.remote.dto.toCoinDetail
+import com.arpi.cryptoexchange.data.mapper.toCoinDetail
 import com.arpi.cryptoexchange.domain.model.CoinDetail
 import com.arpi.cryptoexchange.domain.repository.CoinRepository
 import kotlinx.coroutines.flow.Flow
