@@ -1,16 +1,15 @@
 package com.arpi.cryptoexchange.domain.use_case.get_coins
 
 
-import android.util.Log
 import com.arpi.cryptoexchange.common.Resource
-import com.arpi.cryptoexchange.data.remote.dto.coin_dto.toCoin
+import com.arpi.cryptoexchange.data.remote.dto.toCoin
 import com.arpi.cryptoexchange.domain.model.Coin
 import com.arpi.cryptoexchange.domain.repository.CoinRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 
 class GetCoinsUseCase @Inject constructor(
         private val repository: CoinRepository,

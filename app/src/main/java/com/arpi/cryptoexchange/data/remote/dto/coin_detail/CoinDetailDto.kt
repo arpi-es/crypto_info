@@ -31,16 +31,3 @@ data class CoinDetailDto(
         val watchlist_portfolio_users: Int,
 )
 
-fun CoinDetailDto.toCoinDetail(): CoinDetail {
-
-    return CoinDetail(
-            id = id,
-            symbol = symbol,
-            name = name,
-            image = image,
-            marketCapRank = market_cap_rank,
-            marketDataPrice = market_data.current_price.usd,
-            description = description.en
-    )
-
-}

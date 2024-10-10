@@ -33,14 +33,3 @@ data class CoinDto(
     @SerializedName("last_updated") val lastUpdated: String
 )
 
-fun CoinDto.toCoin(): Coin {
-    return Coin(
-        id = id,
-        symbol = symbol,
-        name = name,
-        image = image,
-        currentPrice = currentPrice,
-        marketCap = marketCap,
-        marketCapRank = marketCapRank,
-    )
-}
