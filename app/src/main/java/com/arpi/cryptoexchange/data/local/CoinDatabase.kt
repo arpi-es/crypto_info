@@ -11,5 +11,5 @@ import com.arpi.cryptoexchange.data.local.dao.CoinDao
 )
 abstract class CoinDatabase : RoomDatabase() {
 
-    abstract val dao: CoinDao
+    abstract val coinDao: CoinDao
 }

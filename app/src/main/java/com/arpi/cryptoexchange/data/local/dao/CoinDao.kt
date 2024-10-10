@@ -10,7 +10,7 @@ import com.arpi.cryptoexchange.data.local.CoinEntity
 interface CoinDao {
 
     @Upsert
-    suspend fun upsertAll(beers: List<CoinEntity>)
+    suspend fun upsertAll(coins: List<CoinEntity>)
 
     @Query("SELECT * FROM tbl_coins")
     fun pagingSource(): PagingSource<Int, CoinEntity>
