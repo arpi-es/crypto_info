@@ -82,8 +82,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCoinRepository(api: CoinApi): CoinRepository {
-        return CoinRepositoryImpl(api)
+    fun provideCoinRepository(api: CoinApi,
+                              database: CoinDatabase): CoinRepository {
+        return CoinRepositoryImpl(api, database)
 
     }
 
