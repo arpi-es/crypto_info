@@ -7,6 +7,7 @@ import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.arpi.cryptoexchange.data.local.CoinDatabase
 import com.arpi.cryptoexchange.data.local.CoinEntity
+import com.arpi.cryptoexchange.data.local.RemoteKeys
 import com.arpi.cryptoexchange.data.mapper.toCoinEntity
 import com.arpi.cryptoexchange.data.remote.CoinApi
 import retrofit2.HttpException
@@ -24,15 +25,19 @@ class GetCoinsMediator(
         state: PagingState<Int, CoinEntity>
     ): MediatorResult {
         val page = when (loadType) {
-            LoadType.REFRESH -> 1 // Start from page 1 when refreshing
+            LoadType.REFRESH -> {
+                // Determine the page to load for a refresh (start from the first page if no keys are found)
+                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                remoteKeys?.nextKey?.minus(1) ?: 1
+            }
             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true) // No prepending supported
             LoadType.APPEND -> {
-                val lastPage = getLastPage(state)
 
-                if (lastPage == null) {
-                    return MediatorResult.Success(endOfPaginationReached = true) // If we can't get a valid page number, stop
-                }
-                lastPage + 1 // Increment the page for loading more data
+                // Fetch the remote key for the last item (for loading more data)
+                val remoteKeys = getRemoteKeyForLastItem(state)
+                val nextKey = remoteKeys?.nextKey ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                nextKey
+
             }
         }
 
@@ -45,9 +50,21 @@ class GetCoinsMediator(
 
             database.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    database.coinDao.clearAll() // Clear old data on refresh
+                    // Clear old data for a refresh
+                    database.remoteKeysDao.clearRemoteKeys()
+                    database.coinDao.clearAll()
                 }
-                database.coinDao.upsertAll(coins) // Insert the new coins
+
+                // Insert new data into the database
+                val keys = apiResponse.map { coin ->
+                    RemoteKeys(
+                        coinId = coin.id,
+                        prevKey = if (page == 1) null else page - 1,
+                        nextKey = if (endOfPaginationReached) null else page + 1
+                    )
+                }
+                database.remoteKeysDao.insertAll(keys)
+                database.coinDao.upsertAll(coins)
             }
 
             return MediatorResult.Success(endOfPaginationReached = endOfPaginationReached)
@@ -59,14 +76,27 @@ class GetCoinsMediator(
         }
     }
 
-
-    // Helper function to get the last page from the PagingState
-    private fun getLastPage(state: PagingState<Int, CoinEntity>): Int? {
-        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.size?.let {
-            // This could be derived from any suitable property like list size or position
-            it / state.config.pageSize
+    // Helper function to get the closest RemoteKey to the current position
+    private suspend fun getRemoteKeyClosestToCurrentPosition(state: PagingState<Int, CoinEntity>): RemoteKeys? {
+        return state.anchorPosition?.let { position ->
+            state.closestItemToPosition(position)?.id?.let { id ->
+                database.remoteKeysDao.remoteKeysCoinId(id)
+            }
         }
     }
 
+    // Helper function to get the RemoteKey for the first item
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, CoinEntity>): RemoteKeys? {
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { coin ->
+            database.remoteKeysDao.remoteKeysCoinId(coin.id)
+        }
+    }
+
+    // Helper function to get the RemoteKey for the last item
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, CoinEntity>): RemoteKeys? {
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { coin ->
+            database.remoteKeysDao.remoteKeysCoinId(coin.id)
+        }
+    }
 
 }
