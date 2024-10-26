@@ -5,6 +5,8 @@ import com.arpi.cryptoexchange.BuildConfig
 object Constants {
 
 
+    const val MAX_PAGE_SIZE = 20
+
     const val BASE_URL = "https://api.coingecko.com/api/v3/"
 
     const val  PARAM_COIN_ID: String = "coinId"

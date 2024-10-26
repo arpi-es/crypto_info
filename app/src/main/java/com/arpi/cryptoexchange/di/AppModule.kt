@@ -1,7 +1,10 @@
 package com.arpi.cryptoexchange.di
 
+import android.content.Context
+import androidx.room.Room
 import com.arpi.cryptoexchange.common.ApiConstants
 import com.arpi.cryptoexchange.common.Constants
+import com.arpi.cryptoexchange.data.local.CoinDatabase
 import com.arpi.cryptoexchange.data.remote.AuthInterceptor
 import com.arpi.cryptoexchange.data.remote.CoinApi
 import com.arpi.cryptoexchange.data.repository.CoinRepositoryImpl
@@ -11,6 +14,7 @@ import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -78,9 +82,21 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideCoinRepository(api: CoinApi): CoinRepository {
-        return CoinRepositoryImpl(api)
+    fun provideCoinRepository(api: CoinApi,
+                              database: CoinDatabase): CoinRepository {
+        return CoinRepositoryImpl(api, database)
 
     }
+
+    @Provides
+    @Singleton
+    fun provideCoinDatabase(@ApplicationContext context: Context): CoinDatabase {
+        return Room.databaseBuilder(
+            context,
+            CoinDatabase::class.java,
+            "coins.db"
+        ).build()
+    }
+
 
 }
