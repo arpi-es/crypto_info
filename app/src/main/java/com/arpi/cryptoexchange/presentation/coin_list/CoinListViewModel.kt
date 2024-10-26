@@ -21,17 +21,9 @@ class CoinListViewModel @Inject constructor(
     private val getCoinsUseCase: GetCoinsUseCase,
 ) : ViewModel() {
 
-
-//    private val _coinState: MutableStateFlow<PagingData<Coin>> = MutableStateFlow(value = PagingData.empty())
-//    val coinState: MutableStateFlow<PagingData<Coin>> get() = _coinState
-
     private val _coins = MutableStateFlow<PagingData<Coin>>(PagingData.empty())
     val coins: StateFlow<PagingData<Coin>> = _coins.asStateFlow()
 
-
-
-    private var _state = mutableStateOf(CoinListState())
-    val state: State<CoinListState> = _state
 
     init {
         getCoins()
